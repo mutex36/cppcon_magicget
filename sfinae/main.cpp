@@ -70,33 +70,12 @@ namespace Serialization
             }
         };
         
-        template <typename T>
-        struct remove_all_ref_ptr { typedef typename std::remove_cv<T>::type type; };
-        
-        template <typename T>
-        struct remove_all_ref_ptr<T *> : public remove_all_ref_ptr<T> { };
-        
-        template <typename T>
-        struct remove_all_ref_ptr<T * const> : public remove_all_ref_ptr<T> { };
-        
-        template <typename T>
-        struct remove_all_ref_ptr<T * volatile> : public remove_all_ref_ptr<T> { };
-        
-        template <typename T>
-        struct remove_all_ref_ptr<T * const volatile> : public remove_all_ref_ptr<T> { };
-        
-        template <typename T>
-        struct remove_all_ref_ptr<T &> : public remove_all_ref_ptr<T> { };
-        
-        template <typename T>
-        struct remove_all_ref_ptr<T &&> : public remove_all_ref_ptr<T> { };
-        
         template<size_t I>
         struct ubiq_val
         {
             type* type_list;
             
-            template<typename T, typename D = typename remove_all_ref_ptr<T>::type>
+            template<typename T, typename D = typename std::decay<T>::type>
             constexpr operator T() const noexcept
             {
                 auto& tp = type_list[I];
