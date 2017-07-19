@@ -18,30 +18,18 @@ namespace Serialization
     {
         
 #define CR_SERIALIZATION_MAX_FIELDS 10
-#define CR_SERIALIZATION_TYPE(TYPE, ID)              \
-    template<>                                       \
-    constexpr size_t type_id<TYPE>() noexcept        \
-    {                                                \
-        return ID;                                   \
-    }                                                \
-    template<>                                       \
-    constexpr const char* type_name<TYPE>() noexcept \
-    {                                                \
-        return #TYPE;                                \
-    }                                                \
-
+#define CR_SERIALIZATION_TYPE(TYPE, ID)          \
+template<>                                       \
+constexpr size_t type_id<TYPE>() noexcept        \
+{                                                \
+    return ID;                                   \
+}                                                \
+    
         template<typename T>
         constexpr size_t type_id() noexcept
         {
             return 0;
         }
-        
-        template<typename T>
-        constexpr const char* type_name() noexcept
-        {
-            return "Unknown";
-        }
-        
         CR_SERIALIZATION_TYPE(char, 1);
         CR_SERIALIZATION_TYPE(unsigned char, 2);
         CR_SERIALIZATION_TYPE(int, 3);
@@ -57,7 +45,6 @@ namespace Serialization
             size_t hash;
             size_t index;
             size_t size;
-            std::string name;
         };
         
         template<size_t I>
@@ -80,7 +67,6 @@ namespace Serialization
             {
                 auto& tp = type_list[I];
                 tp.hash = type_id<D>();
-                tp.name = type_name<D>();
                 tp.index = I;
                 tp.size = sizeof(T);
                 
