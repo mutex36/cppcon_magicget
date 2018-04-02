@@ -1,6 +1,6 @@
-namespace Core::Reflection
+namespace reflection
 {
-	namespace _Detail
+	namespace detail
 	{
 		template<typename T>
 		struct type_to_hash;
