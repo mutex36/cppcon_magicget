@@ -100,9 +100,9 @@ namespace reflection
 	struct Reflect {
 		static_assert(std::is_class<T>::value, "reflected type is not a struct/class");
 
-		static constexpr size_t field_count = _Detail::count_fields<T>();
+		static constexpr size_t field_count = detail::count_fields<T>();
 
 		template<size_t Index>
-		using field_type = typename _Detail::field_type<T, Index>::type;
+		using field_type = typename detail::field_type<T, Index>::type;
 	};
 }
